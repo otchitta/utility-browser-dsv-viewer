@@ -91,7 +91,7 @@ class DsvHelper {
 	 * @returns {string} - 復号情報
 	 */
 	#decodeItem(source) {
-		if (source.length !== 1 && source[0] === this.#contentEscape && source[source.length - 1] === this.#contentEscape) {
+		if (2 <= source.length && source[0] === this.#contentEscape && source[source.length - 1] === this.#contentEscape) {
 			return this.#decodeText(source.substring(1, source.length - 1));
 		} else {
 			return this.#decodeText(source);
@@ -143,7 +143,7 @@ class DsvHelper {
 					offset = index + 1;
 				}
 			}
-			if (offset <= length) {
+			if (offset < length) {
 				result.push(this.#decodeLine(source.substring(offset)));
 			}
 			return result;
