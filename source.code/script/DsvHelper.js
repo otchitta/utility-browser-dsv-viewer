@@ -92,7 +92,7 @@ class DsvHelper {
 	 */
 	#decodeItem(source) {
 		if (source.length !== 1 && source[0] === this.#contentEscape && source[source.length - 1] === this.#contentEscape) {
-			return this.#decodeText(source.substring(1, source.length - 2));
+			return this.#decodeText(source.substring(1, source.length - 1));
 		} else {
 			return this.#decodeText(source);
 		}
