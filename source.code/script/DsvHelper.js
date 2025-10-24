@@ -4,7 +4,7 @@
 class DsvHelper {
 	//#region メンバー変数定義
 	/** @type {string} 回避文字 */
-	#contentEscape;
+	#textCharacter;
 	/** @type {string} 区切文字 */
 	#itemDelimiter;
 	/** @type {string} 区切文字 */
@@ -12,14 +12,14 @@ class DsvHelper {
 	//#endregion メンバー変数定義
 
 	//#region プロパティー定義
-	get contentEscape() {
-		return this.#contentEscape;
+	get textCharacter() {
+		return this.#textCharacter;
 	}
-	set contentEscape(update) {
+	set textCharacter(update) {
 		if (Object.prototype.toString.call(update) === '[object String]') {
-			this.#contentEscape = update;
+			this.#textCharacter = update;
 		} else {
-			throw new Error("contentEscape can not setting not string.");
+			throw new Error("textCharacter can not setting not string.");
 		}
 	}
 
@@ -51,7 +51,7 @@ class DsvHelper {
 	 * DSV解析処理を生成します。
 	 */
 	constructor() {
-		this.#contentEscape = '"';
+		this.#textCharacter = '"';
 		this.#itemDelimiter = ',';
 		this.#lineDelimiter = '\r\n';
 	}
@@ -69,7 +69,7 @@ class DsvHelper {
 		let result = '';
 		for (let index = 0; index < length; index ++) {
 			let choose = source[index];
-			if (choose === this.#contentEscape) {
+			if (choose === this.#textCharacter) {
 				if (escape === false) result += choose;
 				escape = !escape;
 			} else if (escape === false) {
@@ -91,7 +91,7 @@ class DsvHelper {
 	 * @returns {string} - 復号情報
 	 */
 	#decodeItem(source) {
-		if (2 <= source.length && source[0] === this.#contentEscape && source[source.length - 1] === this.#contentEscape) {
+		if (2 <= source.length && source[0] === this.#textCharacter && source[source.length - 1] === this.#textCharacter) {
 			return this.#decodeText(source.substring(1, source.length - 1));
 		} else {
 			return this.#decodeText(source);
@@ -105,7 +105,7 @@ class DsvHelper {
 		let offset = 0;
 		for (let index = 0; index < length; index ++) {
 			let choose = source[index];
-			if (choose === this.#contentEscape) {
+			if (choose === this.#textCharacter) {
 				// 回避情報である場合：状態反転
 				ignore = !ignore;
 			} else if (ignore) {
@@ -132,7 +132,7 @@ class DsvHelper {
 			let offset = 0;
 			for (let index = 0; index < length; index ++) {
 				let choose = source[index];
-				if (choose === this.#contentEscape) {
+				if (choose === this.#textCharacter) {
 					// 回避情報である場合：状態反転
 					ignore = !ignore;
 				} else if (ignore) {
