@@ -28,13 +28,7 @@ class DsvHelper {
 	 * @throws <code>update</code>が１文字ではない場合
 	 */
 	set textCharacter(update) {
-		if (Object.prototype.toString.call(update) !== '[object String]') {
-			throw new Error("textCharacter must be string.");
-		} else if (update.length !== 1) {
-			throw new Error("textCharacter must be character.");
-		} else {
-			this.#textCharacter = update;
-		}
+		this.#setTextCharacter(update);
 	}
 
 	/**
@@ -46,17 +40,13 @@ class DsvHelper {
 		return this.#itemDelimiter;
 	}
 	/**
-	 * 要素区切を設定します。
+	 * 項目区切を設定します。
 	 *
-	 * @param {string} update - 要素区切
+	 * @param {string} update - 項目区切
 	 * @throws <code>update</code>が文字列ではない場合
 	 */
 	set itemDelimiter(update) {
-		if (Object.prototype.toString.call(update) === '[object String]') {
-			this.#itemDelimiter = update;
-		} else {
-			throw new Error("itemDelimiter can not setting not string.");
-		}
+		this.#setItemDelimiter(update);
 	}
 
 	/**
@@ -74,11 +64,7 @@ class DsvHelper {
 	 * @throws <code>update</code>が文字列ではない場合
 	 */
 	set lineDelimiter(update) {
-		if (Object.prototype.toString.call(update) === '[object String]') {
-			this.#lineDelimiter = update;
-		} else {
-			throw new Error("lineDelimiter can not setting not string.");
-		}
+		this.#setLineDelimiter(update);
 	}
 	//#endregion プロパティー定義
 
@@ -92,6 +78,51 @@ class DsvHelper {
 		this.#lineDelimiter = '\r\n';
 	}
 	//#endregion 生成メソッド定義:Constructor
+
+	//#region 内部メソッド定義:#setTextCharacter/#setItemDelimiter/#setLineDelimiter
+	/**
+	 * 文字切替を設定します。
+	 *
+	 * @param {string} update 文字切替
+	 * @throws <code>update</code>が文字列ではない場合
+	 * @throws <code>update</code>が１文字ではない場合
+	 */
+	#setTextCharacter(update) {
+		if (Object.prototype.toString.call(update) !== '[object String]') {
+			throw new Error("textCharacter must be string.");
+		} else if (update.length !== 1) {
+			throw new Error("textCharacter must be character.");
+		} else {
+			this.#textCharacter = update;
+		}
+	}
+	/**
+	 * 項目区切を設定します。
+	 *
+	 * @param {string} update - 項目区切
+	 * @throws <code>update</code>が文字列ではない場合
+	 */
+	#setItemDelimiter(update) {
+		if (Object.prototype.toString.call(update) === '[object String]') {
+			this.#itemDelimiter = update;
+		} else {
+			throw new Error("itemDelimiter can not setting not string.");
+		}
+	}
+	/**
+	 * 要素区切を設定します。
+	 *
+	 * @param {string} update - 要素区切
+	 * @throws <code>update</code>が文字列ではない場合
+	 */
+	#setLineDelimiter(update) {
+		if (Object.prototype.toString.call(update) === '[object String]') {
+			this.#lineDelimiter = update;
+		} else {
+			throw new Error("lineDelimiter can not setting not string.");
+		}
+	}
+	//#endregion 内部メソッド定義:#setTextCharacter/#setItemDelimiter/#setLineDelimiter
 
 	/**
 	 * 項目情報を復号します。
