@@ -106,7 +106,7 @@ class DsvHelper {
 		if (Object.prototype.toString.call(update) === '[object String]') {
 			this.#itemDelimiter = update;
 		} else {
-			throw new Error("itemDelimiter can not setting not string.");
+			throw new Error("itemDelimiter must be string.");
 		}
 	}
 	/**
@@ -119,7 +119,7 @@ class DsvHelper {
 		if (Object.prototype.toString.call(update) === '[object String]') {
 			this.#lineDelimiter = update;
 		} else {
-			throw new Error("lineDelimiter can not setting not string.");
+			throw new Error("lineDelimiter must be string.");
 		}
 	}
 	//#endregion 内部メソッド定義:#setTextCharacter/#setItemDelimiter/#setLineDelimiter
