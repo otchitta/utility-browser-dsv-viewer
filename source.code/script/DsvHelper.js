@@ -71,11 +71,17 @@ class DsvHelper {
 	//#region 生成メソッド定義:Constructor
 	/**
 	 * DSV解析処理を生成します。
+	 *
+	 * @param {object} [config] - 設定情報
+	 * @param {string} [config.textCharacter='"'   ] - 文字切替
+	 * @param {string} [config.itemDelimiter=','   ] - 項目区切
+	 * @param {string} [config.lineDelimiter='\r\n'] - 要素区切
 	 */
-	constructor() {
-		this.#textCharacter = '"';
-		this.#itemDelimiter = ',';
-		this.#lineDelimiter = '\r\n';
+	constructor(config = {}) {
+		const source = { textCharacter: '"', itemDelimiter: ',', lineDelimiter: '\r\n', ...config };
+		this.#setTextCharacter(source.textCharacter);
+		this.#setItemDelimiter(source.itemDelimiter);
+		this.#setLineDelimiter(source.lineDelimiter);
 	}
 	//#endregion 生成メソッド定義:Constructor
 
