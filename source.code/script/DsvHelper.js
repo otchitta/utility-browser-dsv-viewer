@@ -3,7 +3,7 @@
 /* ================================================================ */
 class DsvHelper {
 	//#region メンバー変数定義
-	/** @type {string} 回避文字 */
+	/** @type {string} 文字切替 */
 	#textCharacter;
 	/** @type {string} 項目区切 */
 	#itemDelimiter;
@@ -23,7 +23,7 @@ class DsvHelper {
 	/**
 	 * 文字切替を設定します。
 	 *
-	 * @param {string} update 文字切替
+	 * @param {string} update - 文字切替
 	 * @throws <code>update</code>が文字列ではない場合
 	 * @throws <code>update</code>が１文字ではない場合
 	 */
@@ -89,7 +89,7 @@ class DsvHelper {
 	/**
 	 * 文字切替を設定します。
 	 *
-	 * @param {string} update 文字切替
+	 * @param {string} update - 文字切替
 	 * @throws <code>update</code>が文字列ではない場合
 	 * @throws <code>update</code>が１文字ではない場合
 	 */
@@ -130,11 +130,13 @@ class DsvHelper {
 	}
 	//#endregion 内部メソッド定義:#setTextCharacter/#setItemDelimiter/#setLineDelimiter
 
+	//#region 復号メソッド定義:#decodeText/#decodeItem/#decodeLine/decodeText
 	/**
-	 * 項目情報を復号します。
+	 * 文字情報を復号します。
 	 *
-	 * @param {string} source - 項目情報
-	 * @returns {string} - 復号情報
+	 * @param {string} source - 文字情報
+	 * @returns {string} 復号情報
+	 * @throws {Error} 文字切替が重複していない場合(実装異常)
 	 */
 	#decodeText(source) {
 		let length = source.length;
@@ -161,7 +163,7 @@ class DsvHelper {
 	 * 項目情報を復号します。
 	 *
 	 * @param {string} source - 項目情報
-	 * @returns {string} - 復号情報
+	 * @returns {string} 復号情報
 	 */
 	#decodeItem(source) {
 		if (2 <= source.length && source[0] === this.#textCharacter && source[source.length - 1] === this.#textCharacter) {
@@ -170,7 +172,12 @@ class DsvHelper {
 			return this.#decodeText(source);
 		}
 	}
-
+	/**
+	 * 要素情報を復号します。
+	 *
+	 * @param {string} source - 要素情報
+	 * @returns {string[]} 復号情報
+	 */
 	#decodeLine(source) {
 		let result = [];
 		let length = source.length;
@@ -194,7 +201,12 @@ class DsvHelper {
 		}
 		return result;
 	}
-
+	/**
+	 * 読込情報を復号します。
+	 *
+	 * @param {string} source - 読込情報
+	 * @returns {string[][]} 復号情報
+	 */
 	decodeText(source) {
 		if (Object.prototype.toString.call(source) !== '[object String]') {
 			throw new Error('Must be string.');
@@ -222,4 +234,5 @@ class DsvHelper {
 			return result;
 		}
 	}
+	//#endregion 復号メソッド定義:#decodeText/#decodeItem/#decodeLine/decodeText
 }
