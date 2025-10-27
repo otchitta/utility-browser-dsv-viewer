@@ -5,27 +5,52 @@ class DsvHelper {
 	//#region メンバー変数定義
 	/** @type {string} 回避文字 */
 	#textCharacter;
-	/** @type {string} 区切文字 */
+	/** @type {string} 項目区切 */
 	#itemDelimiter;
-	/** @type {string} 区切文字 */
+	/** @type {string} 要素区切 */
 	#lineDelimiter;
 	//#endregion メンバー変数定義
 
 	//#region プロパティー定義
+	/**
+	 * 文字切替を取得します。
+	 *
+	 * @returns {string} 文字切替
+	 */
 	get textCharacter() {
 		return this.#textCharacter;
 	}
+	/**
+	 * 文字切替を設定します。
+	 *
+	 * @param {string} update 文字切替
+	 * @throws <code>update</code>が文字列ではない場合
+	 * @throws <code>update</code>が１文字ではない場合
+	 */
 	set textCharacter(update) {
-		if (Object.prototype.toString.call(update) === '[object String]') {
-			this.#textCharacter = update;
+		if (Object.prototype.toString.call(update) !== '[object String]') {
+			throw new Error("textCharacter must be string.");
+		} else if (update.length !== 1) {
+			throw new Error("textCharacter must be character.");
 		} else {
-			throw new Error("textCharacter can not setting not string.");
+			this.#textCharacter = update;
 		}
 	}
 
+	/**
+	 * 項目区切を取得します。
+	 *
+	 * @returns {string} 項目区切
+	 */
 	get itemDelimiter() {
 		return this.#itemDelimiter;
 	}
+	/**
+	 * 要素区切を設定します。
+	 *
+	 * @param {string} update - 要素区切
+	 * @throws <code>update</code>が文字列ではない場合
+	 */
 	set itemDelimiter(update) {
 		if (Object.prototype.toString.call(update) === '[object String]') {
 			this.#itemDelimiter = update;
@@ -34,9 +59,20 @@ class DsvHelper {
 		}
 	}
 
+	/**
+	 * 要素区切を取得します。
+	 *
+	 * @returns {string} 要素区切
+	 */
 	get lineDelimiter() {
 		return this.#lineDelimiter;
 	}
+	/**
+	 * 要素区切を設定します。
+	 *
+	 * @param {string} update - 要素区切
+	 * @throws <code>update</code>が文字列ではない場合
+	 */
 	set lineDelimiter(update) {
 		if (Object.prototype.toString.call(update) === '[object String]') {
 			this.#lineDelimiter = update;
